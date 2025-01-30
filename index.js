@@ -4,22 +4,24 @@ const fs = require('fs');
 
 http.createServer((req, res) => {
 
-    let pathName = req.url;
-    let fileName = () => {
-        if(req.url == '/') {
+    let constructedPath = () => {
+        if(req.url == '/index' || req.url == '/') {
             return './index.html';
-        } else if(pathName == '/about') {
+        } else if(req.url == '/about') {
             return './about.html';
+        } else if(req.url == '/contact-me') {
+            return './contact-me.html';
+        } else {
+            return './404.html';
         }
     }
 
 
-    fs.readFile(fileName(), 'utf8', (err, data) => {
+    fs.readFile(constructedPath(), (err, data) => {
         res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(data);
-        res.end();
+        
+        return res.end(data);
     })
-
 
 
 
